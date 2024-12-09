@@ -21,8 +21,9 @@ import {ImageFour} from '../../assets';
 import ButtonIcon from '../../../components/button-icon';
 import Gap from '../../../components/gap';
 import ButtonIconText from '../../../components/button-icon-text';
-import ButtonText from '../../../components/button-text';
 import ButtonSingle from '../../../components/button-single';
+import {PlayfairDisplay} from '../../utils/fonts';
+import BadgeVariant from '../../../components/badge-variant';
 
 const DetailProduct = (props: any) => {
   const {navigation} = props;
@@ -50,14 +51,14 @@ const DetailProduct = (props: any) => {
             <Text style={styles.nameProduct}>Iphone 16 Pro</Text>
             <ButtonIconText
               label={'On sale'}
-              icon={<IconPercent width={30} height={30} />}
+              icon={<IconPercent width={20} height={20} />}
             />
           </View>
           <Gap height={10} />
           <View style={styles.reviewSection}>
             <ButtonIconText
               icon={<IconStar width={20} height={20} />}
-              label="4.8"
+              label="9.8"
               styleContainer={styles.badgeRating}
               textStyle={styles.textStyle}
             />
@@ -66,7 +67,7 @@ const DetailProduct = (props: any) => {
               icon={<IconDeliver width={20} height={20} />}
               styleContainer={styles.badgeRating}
               textStyle={styles.textStyle}
-              label="9.4"
+              label="9.8"
             />
             <Gap width={5} />
             <Text style={styles.textReviews}>117 reviews</Text>
@@ -78,22 +79,11 @@ const DetailProduct = (props: any) => {
             est blanditiis qui eius expedita ullam porro laborum cum, veniam
             voluptate aliquam?
           </Text>
-          <Text style={styles.desc}>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-            fugit nam tenetur non nobis deleniti, ducimus molestias! Corrupti,
-            est blanditiis qui eius expedita ullam porro laborum cum, veniam
-            voluptate aliquam?
-          </Text>
-          <Text style={styles.desc}>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-            fugit nam tenetur non nobis deleniti, ducimus molestias! Corrupti,
-            est blanditiis qui eius expedita ullam porro laborum cum, veniam
-            voluptate aliquam?
-          </Text>
+          
           <Gap height={10} />
           <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
             {[1, 2, 3].map((item, index) => (
-              <ButtonText
+              <BadgeVariant
                 title={
                   index === 0 ? '1 GB' : index === 1 ? '854 GB' : '1000 GB'
                 }
@@ -106,9 +96,10 @@ const DetailProduct = (props: any) => {
         </View>
       </ScrollView>
       <View style={styles.footer}>
+        {/* section price */}
         <View style={{flex: 1}}>
-          <Text>$650.00</Text>
-          <Text>$570.00</Text>
+          <Text style={styles.strikeTroughPrice}>$650.00</Text>
+          <Text style={styles.price}>$570.00</Text>
         </View>
         <View style={{flex: 2}}>
           <ButtonSingle
@@ -183,18 +174,18 @@ const useStyles = (height: any) => {
     },
     textStyle: {
       color: colors.text,
-      fontFamily: 'PlayfairDisplay-ExtraBold'
+      fontFamily: PlayfairDisplay.extraBold,
     },
     textReviews: {
       fontSize: 11,
-      fontWeight: '400',
       color: colors.textInactive,
+      fontFamily: PlayfairDisplay.regular,
     },
     desc: {
       fontSize: 13,
-      fontWeight: '500',
       color: colors.text,
       lineHeight: 20,
+      fontFamily: PlayfairDisplay.medium,
     },
     styleContainer: {
       borderColor: colors.text,
@@ -218,6 +209,18 @@ const useStyles = (height: any) => {
       justifyContent: 'space-between',
       alignItems: 'center',
       width: '100%',
+    },
+    strikeTroughPrice: {
+      fontFamily: PlayfairDisplay.semiBold,
+      fontSize: 15,
+      textDecorationLine: 'line-through',
+      textDecorationStyle: 'solid',
+      color: colors.containerLine,
+    },
+    price: {
+      fontFamily: PlayfairDisplay.extraBold,
+      fontSize: 15,
+      color: colors.text,
     },
   });
 };

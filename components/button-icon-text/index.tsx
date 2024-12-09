@@ -8,6 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import Gap from '../gap';
+import { PlayfairDisplay } from '../../src/utils/fonts';
 
 type Buttontypes = {
   label?: string;
@@ -36,9 +37,6 @@ const useStyles = () => {
     container: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'center',
-      alignContent: 'center',
-      alignSelf: 'center',
       backgroundColor: colors.danger,
       borderRadius: 10,
       paddingVertical: 4,
@@ -46,8 +44,8 @@ const useStyles = () => {
     },
     label: {
       fontSize: 12,
-      fontWeight: '500',
       color: colors.container,
+     fontFamily: PlayfairDisplay.bold,
     },
   });
 };
