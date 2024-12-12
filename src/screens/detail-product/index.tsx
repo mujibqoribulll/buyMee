@@ -24,11 +24,12 @@ import ButtonIconText from '../../../components/button-icon-text';
 import ButtonSingle from '../../../components/button-single';
 import {PlayfairDisplay} from '../../utils/fonts';
 import BadgeVariant from '../../../components/badge-variant';
+import {useNavigateToScreen} from '../../helper/hooks';
 
 const DetailProduct = (props: any) => {
-  const {navigation} = props;
   const {height} = useWindowDimensions();
   const styles = useStyles(height);
+  const {navigateToScreen} = useNavigateToScreen();
 
   return (
     <SafeAreaView style={styles.safearea}>
@@ -37,7 +38,7 @@ const DetailProduct = (props: any) => {
         <View style={styles.wrapperNavTransparant}>
           <ButtonIcon
             icon={<IconArrowLeft width={20} height={20} />}
-            onPress={() => navigation.goBack()}
+            onPress={() => navigateToScreen('back')}
           />
 
           <View style={styles.doubleButton}>
@@ -79,7 +80,7 @@ const DetailProduct = (props: any) => {
             est blanditiis qui eius expedita ullam porro laborum cum, veniam
             voluptate aliquam?
           </Text>
-          
+
           <Gap height={10} />
           <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
             {[1, 2, 3].map((item, index) => (

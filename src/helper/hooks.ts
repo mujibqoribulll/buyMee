@@ -4,7 +4,12 @@ export const useNavigateToScreen = () => {
     const navigation = useNavigation();
 
     const navigateToScreen = (screenName: string, params?: object) => {
-        navigation.navigate(screenName, params);
+        if (screenName === 'back') {
+            navigation.goBack()
+        } else {
+            navigation.navigate(screenName, params);
+        }
+
     };
 
     return { navigateToScreen };

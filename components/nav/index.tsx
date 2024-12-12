@@ -2,6 +2,7 @@ import {GestureResponderEvent, StyleSheet, Text, View} from 'react-native';
 import ButtonIcon from '../button-icon';
 import {useTheme} from '@react-navigation/native';
 import Gap from '../gap';
+import { PlayfairDisplay } from '../../src/utils/fonts';
 
 type NavType = {
   leftIcon?: React.ReactNode;
@@ -27,7 +28,7 @@ const Nav = (props: NavType) => {
     midLabel,
     doubleButtonRight = false,
     rightIconMore,
-    hasCount,
+    hasCount = false,
   } = props;
   const styles = useStyles();
 
@@ -39,7 +40,7 @@ const Nav = (props: NavType) => {
         <ButtonIcon icon={leftIcon} onPress={leftPressIcon} />
       )}
 
-      {midLabel ? <Text>{midLabel}</Text> : null}
+      {midLabel ? <Text style={styles.label}>{midLabel}</Text> : null}
       {doubleButtonRight ? (
         <View style={styles.doubleButton}>
           <ButtonIcon icon={rightIconMore} onPress={rightPressIconMore} />
@@ -68,7 +69,7 @@ const useStyles = () => {
     },
     label: {
       fontSize: 16,
-      fontWeight: '400',
+      fontFamily: PlayfairDisplay.bold,
       color: colors.text,
     },
     doubleButton: {

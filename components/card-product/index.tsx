@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {IconStar, ImageFour} from '../../src/assets';
 import Gap from '../gap';
+import {PlayfairDisplay} from '../../src/utils/fonts';
 
 type InitialProductType = {
   id?: number;
@@ -38,7 +39,7 @@ const CardProduct = (props: ProductTypes): JSX.Element => {
           <Image source={ImageFour} resizeMode="cover" style={styles.image} />
         </View>
         <View style={styles.wrapperContent}>
-          <Text style={styles.name}>{data?.name}</Text>
+          <Text style={styles.name} numberOfLines={1} ellipsizeMode='tail'>kfdsjjkndfsjkf sndjfnsdjfn sdfsd fdj</Text>
           <View style={styles.wrapperRate}>
             <IconStar />
             <Gap width={6} />
@@ -57,11 +58,10 @@ const useStyles = (width: any) => {
   return StyleSheet.create({
     container: {
       paddingHorizontal: 10,
-      flexWrap: 'wrap',
       justifyContent: 'center',
+      width: width / 2,
     },
     card: {
-      width: width / 2 - 30,
       borderRadius: 20,
       overflow: 'hidden',
       marginBottom: 7,
@@ -74,24 +74,24 @@ const useStyles = (width: any) => {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      width: width / 2 - 30,
       marginBottom: 6,
       paddingHorizontal: 5,
     },
     name: {
       fontSize: 13,
-      fontWeight: '400',
+      fontFamily: PlayfairDisplay.regular,
       color: colors.textInactive,
+      width: width / 2 - 70,
     },
     rate: {
       fontSize: 14,
-      fontWeight: '600',
+      fontFamily: PlayfairDisplay.bold,
       color: colors.text,
     },
     price: {
       fontSize: 16,
-      fontWeight: '600',
       color: colors.text,
+      fontFamily: PlayfairDisplay.bold,
     },
     wrapperRate: {
       flexDirection: 'row',

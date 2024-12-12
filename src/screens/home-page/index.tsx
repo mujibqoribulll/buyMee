@@ -1,7 +1,7 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Nav from '../../../components/nav';
-import {useTheme} from '@react-navigation/native';
+import {NavigationProp, useTheme} from '@react-navigation/native';
 import {
   IconCart,
   IconSearch,
@@ -17,10 +17,15 @@ import CategoryList from '../../../components/category-list';
 import CardProduct from '../../../components/card-product';
 import ProductList from '../../../components/product-list';
 import {useHomeFunction} from './useHomeFunction';
+import {useNavigateToScreen} from '../../helper/hooks';
 
-const HomePage = () => {
+type HomePageTypes = {
+  navigation: NavigationProp<any>;
+};
+
+const HomePage = (props: HomePageTypes) => {
   const styles = useStyles();
-
+  const {navigateToScreen} = useNavigateToScreen();
   const {
     dummyBanners,
     dummyProduct,
@@ -28,15 +33,13 @@ const HomePage = () => {
     function: {},
   } = useHomeFunction();
 
-
-
-
   return (
     <SafeAreaView style={styles.safearea}>
       <Nav
         leftLabel="Discovery"
         rightIcon={<IconCart width={20} height={20} />}
         hasCount={true}
+        rightPressIcon={() => navigateToScreen('cart')}
       />
       <ScrollView
         nestedScrollEnabled={true}
@@ -56,7 +59,7 @@ const HomePage = () => {
           action="See all"
         />
         <Gap height={10} />
-        <ProductList data={dummyProduct}  />
+        <ProductList data={dummyProduct} />
       </ScrollView>
     </SafeAreaView>
   );
