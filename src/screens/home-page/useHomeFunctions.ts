@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { InitialProductType } from "../../../components/product-list";
 import { ImageFour, ImageOne, ImageThree, ImageTwo } from "../../assets";
 
-export const useHomeFunction = () => {
+export const useHomeFunctions = () => {
     const navigation = useNavigation()
     const dummyBanners = [
         {

@@ -21,6 +21,12 @@ import IconLove from './icons/ic-love.svg'
 import IconUpload from './icons/ic-upload.svg'
 import IconPercent from './icons/ic-badge-percent.svg'
 import IconDeliver from './icons/ic-chat-read.svg'
+import IconMoreVertical from './icons/ic-more-vertical.svg'
+import IconDeleteGray from './icons/ic-delete-grey.svg'
+import IconPlus from './icons/ic-plus.svg'
+import IconMinus from './icons/ic-minus.svg'
+import IconCheckbox from './icons/ic-checkbox.svg'
+import IconCheckBox from './icons/ic-checkbox-active.svg'
 
 
 
@@ -48,4 +54,10 @@ export {
     IconUpload,
     IconPercent,
     IconDeliver,
+    IconMoreVertical,
+    IconDeleteGray,
+    IconPlus,
+    IconMinus,
+    IconCheckbox,
+    IconCheckBox,
 }
