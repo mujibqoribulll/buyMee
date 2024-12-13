@@ -65,7 +65,6 @@ const useStyles = () => {
       alignItems: 'center',
       paddingHorizontal: 20,
       paddingVertical: 10,
-      // backgroundColor: colors.textActive,
     },
     label: {
       fontSize: 16,

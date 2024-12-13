@@ -16,7 +16,7 @@ import InputTextSearch from '../../../components/input-text-search';
 import CategoryList from '../../../components/category-list';
 import CardProduct from '../../../components/card-product';
 import ProductList from '../../../components/product-list';
-import {useHomeFunction} from './useHomeFunction';
+import {useHomeFunctions} from './useHomeFunctions';
 import {useNavigateToScreen} from '../../helper/hooks';
 
 type HomePageTypes = {
@@ -31,7 +31,7 @@ const HomePage = (props: HomePageTypes) => {
     dummyProduct,
     dummyCategory,
     function: {},
-  } = useHomeFunction();
+  } = useHomeFunctions();
 
   return (
     <SafeAreaView style={styles.safearea}>

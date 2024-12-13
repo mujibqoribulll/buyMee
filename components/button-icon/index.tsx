@@ -1,26 +1,29 @@
 import {useTheme} from '@react-navigation/native';
 import {
   GestureResponderEvent,
+  StyleProp,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
   View,
+  ViewStyle,
 } from 'react-native';
 
 type ButtonIcon = {
   icon?: React.ReactNode;
   onPress?: (event: GestureResponderEvent) => void;
   hasCount?: boolean;
+  styleIcon?: StyleProp<ViewStyle>;
 };
 
 const ButtonIcon = (props: ButtonIcon): JSX.Element => {
   const styles = useStyles();
-  const {icon, onPress, hasCount = false} = props;
+  const {icon, onPress, hasCount = false, styleIcon} = props;
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View>
         <View style={styles.container}>
-          <View style={styles.iconLabel}>{icon}</View>
+          <View style={[styles.iconLabel, styleIcon]}>{icon}</View>
         </View>
         {hasCount && (
           <View style={styles.badge}>
@@ -40,7 +43,6 @@ const useStyles = () => {
     container: {
       position: 'relative',
       display: 'flex',
-      
     },
     iconLabel: {
       borderColor: colors.border,
@@ -48,7 +50,7 @@ const useStyles = () => {
       borderRadius: 50,
       padding: 7,
       backgroundColor: colors.container,
-      overflow: 'hidden'
+      overflow: 'hidden',
     },
     badge: {
       position: 'absolute',

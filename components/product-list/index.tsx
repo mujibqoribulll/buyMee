@@ -12,11 +12,11 @@ export type InitialProductType = {
   id?: number;
   name: string;
   price: number;
-  rating: number;
+  rating?: number;
   image: string;
 };
 
-type ProductTypes = {
+export type ProductTypes = {
   data: InitialProductType[];
 };
 
@@ -31,7 +31,7 @@ const ProductList = (props: ProductTypes) => {
         nestedScrollEnabled={true}
         data={data}
         scrollEnabled={false}
-        keyExtractor={(item, index) => index.toFixed()}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={({item, index}) => (
           <CardProduct
             data={item}

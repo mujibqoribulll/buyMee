@@ -39,7 +39,9 @@ const CardProduct = (props: ProductTypes): JSX.Element => {
           <Image source={ImageFour} resizeMode="cover" style={styles.image} />
         </View>
         <View style={styles.wrapperContent}>
-          <Text style={styles.name} numberOfLines={1} ellipsizeMode='tail'>kfdsjjkndfsjkf sndjfnsdjfn sdfsd fdj</Text>
+          <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
+            {data?.name}
+          </Text>
           <View style={styles.wrapperRate}>
             <IconStar />
             <Gap width={6} />
