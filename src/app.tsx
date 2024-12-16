@@ -5,9 +5,9 @@
  * @format
  */
 
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import Routes from './route';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
 function App(): React.JSX.Element {
@@ -15,7 +15,7 @@ function App(): React.JSX.Element {
     <SafeAreaProvider>
       <Routes />
       <Toast position={'bottom'} />
-      </SafeAreaProvider>
+    </SafeAreaProvider>
   );
 }
 

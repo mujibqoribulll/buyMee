@@ -7,6 +7,7 @@ import {useColorScheme} from 'react-native';
 import {themes} from '../utils/themes';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createRef} from 'react';
+import NetLog from '../../components/netlog';
 
 const Stack = createStackNavigator();
 export const navigationRef = createRef<NavigationContainerRef<{}>>();
@@ -30,7 +31,9 @@ const Routes = () => {
             />
           );
         })}
+        
       </Stack.Navigator>
+      <NetLog />
     </NavigationContainer>
   );
 };

@@ -14,7 +14,7 @@ import {PlayfairDisplay} from '../../src/utils/fonts';
 
 type InitialProductType = {
   id?: number;
-  name: string;
+  title: string;
   price: number;
   rating: number;
   image: string;
@@ -27,10 +27,8 @@ type ProductTypes = {
 
 const CardProduct = (props: ProductTypes): JSX.Element => {
   const {data, onPress} = props;
-
   const {width} = useWindowDimensions();
   const styles = useStyles(width);
-
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.container}>
@@ -40,7 +38,7 @@ const CardProduct = (props: ProductTypes): JSX.Element => {
         </View>
         <View style={styles.wrapperContent}>
           <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
-            {data?.name}
+            {data?.title}
           </Text>
           <View style={styles.wrapperRate}>
             <IconStar />
