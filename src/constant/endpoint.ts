@@ -1,6 +1,9 @@
 export const ENDPOINTS = {
     AUTH: {
-        LOGIN: '/auth/login'
+        LOGIN: '/auth/login',
+    },
+    HOME: {
+        PRODUCT: '/products/search',
     }
 }
 

@@ -1,9 +1,23 @@
-import { useNavigation } from "@react-navigation/native";
+import { useCallback, useEffect, useState } from "react";
 import { InitialProductType } from "../../../components/product-list";
 import { ImageFour, ImageOne, ImageThree, ImageTwo } from "../../assets";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { getAllProduct } from "../../slices/homeThunk";
+import { shallowEqual } from "react-redux";
+import { PaginationStatus, setPaginationParams } from "../../helper";
+import { useForm } from "../../helper/form";
+
+interface ProductParams {
+    q?: string;       // Optional query parameter
+    limit?: number;   // Optional limit parameter
+    skip?: number;
+    select?: string[];
+}
 
 export const useHomeFunctions = () => {
-    const navigation = useNavigation()
+    const dispatch = useAppDispatch();
+    const { product } = useAppSelector(state => state.home, shallowEqual);
+    const [modalSort, setModalSort] = useState(false);
     const dummyBanners = [
         {
             name: 'banner-1',
@@ -229,12 +243,76 @@ export const useHomeFunctions = () => {
         },
     ];
 
-    const onClickProduct = (item: InitialProductType) => {
+    const [refreshing, setRefreshing] = useState(false); // Pull-to-refresh status
+
+    const [form, setForm] = useForm({
+        search: {
+            label: 'Search',
+            value: '',
+            error: false,
+            required: true,
+            message: '',
+        },
+    });
+
+    const onRefresh = () => {
+        setRefreshing(true);
+        handleGetAllProduct('reset')
     }
 
+    const onClickProduct = (item: InitialProductType) => {
+
+    }
+    const handleEndReach = () => {
+        handleGetAllProduct('next')
+    }
+
+    useEffect(() => {
+        let cancel = false
+        setTimeout(() => {
+            if (!cancel) {
+                handleGetAllProduct('reset')
+            }
+
+        }, 1000)
+
+        return () => {
+            cancel = true
+        }
+
+    }, [form.search.value])
+
+    useEffect(() => {
+        if (refreshing) {
+            setRefreshing(false)
+        }
+
+    }, [refreshing])
+
+    const handleGetAllProduct =
+        (paginate: any) => {
+            const { search } = form
+            let params: ProductParams = {};
+            if (search.value) {
+                params.q = search.value ?? ''
+            }
+            params.limit = 20;
+            params.select = ['title', 'price'];
+
+            dispatch(getAllProduct({ params, paginate }));
+        }
+
+
+
     return {
-        dummyBanners, dummyCategory, dummyProduct, function: {
-            onClickProduct
+        dummyBanners, dummyCategory, dummyProduct, refreshing, product, form, modalSort, function: {
+            onClickProduct,
+            handleGetAllProduct,
+            setRefreshing,
+            onRefresh,
+            handleEndReach,
+            setForm,
+            setModalSort,
         }
     }
 }

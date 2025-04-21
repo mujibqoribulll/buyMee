@@ -15,6 +15,7 @@ const initialState: AuthState = {
         message: '',
         code: '',
         data: {},
+        isLogin: false,
     },
     logout: {
         loading: 'idle',
@@ -36,11 +37,12 @@ export const authSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(postLogin.pending, (state, action) => {
             state.login.loading = 'pending';
+            state.login.isLogin = false;
         });
         builder.addCase(postLogin.fulfilled, (state, action) => {
-            console.log('action', JSON.stringify(action, null, 2))
             state.login.loading = 'succeeded';
             state.login.data = action.payload
+            state.login.isLogin = true;
         });
         builder.addCase(postLogin.rejected, (state, action: any) => {
             let error: any = action;
@@ -48,6 +50,7 @@ export const authSlice = createSlice({
             state.login.code = error?.response?.data?.meta?.code || '';
             state.login.data = error?.response?.data?.data || {};
             state.login.message = setErrorMessage(error);
+            state.login.isLogin = false;
         });
         builder.addCase(postLogout.fulfilled, (state, action) => {
             state.logout.loading = 'succeeded'
