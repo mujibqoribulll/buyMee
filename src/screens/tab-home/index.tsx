@@ -71,9 +71,7 @@ const TabHome = ({navigation, route}: any) => {
   };
 
   useEffect(() => {
-    console.log('logout terhit111', JSON.stringify(auth, null, 2));
     if (auth.logout.loading === 'succeeded') {
-      console.log('logout terhit');
       navigationRef.current?.reset({
         index: 0,
         routes: [{name: 'login'}],
@@ -142,10 +140,10 @@ const TabHome = ({navigation, route}: any) => {
       // barStyle={{backgroundColor: '#6200EE'}}
       screenOptions={{
         headerShown: false,
+        tabBarHideOnKeyboard: true,
       }}>
       {auth?.login?.data?.accessToken
         ? privateRoutes.map((route, index) => {
-            console.log('route', JSON.stringify(route, null, 2));
             return (
               <Tab.Screen
                 name={route.name}

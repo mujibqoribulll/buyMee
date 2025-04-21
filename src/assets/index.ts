@@ -27,6 +27,8 @@ import IconPlus from './icons/ic-plus.svg'
 import IconMinus from './icons/ic-minus.svg'
 import IconCheckbox from './icons/ic-checkbox.svg'
 import IconCheckBox from './icons/ic-checkbox-active.svg'
+import IconMenu from './icons/ic-menu.svg'
+import IcClose from './icons/ic-close.svg'
 
 
 
@@ -60,4 +62,6 @@ export {
     IconMinus,
     IconCheckbox,
     IconCheckBox,
+    IconMenu,
+    IcClose,
 }

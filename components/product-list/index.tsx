@@ -1,6 +1,7 @@
 import {
   FlatList,
   GestureResponderEvent,
+  RefreshControl,
   StyleSheet,
   Text,
   View,
@@ -16,21 +17,71 @@ export type InitialProductType = {
   image: string;
 };
 
-export type ProductTypes = {
-  data: InitialProductType[];
+type Dimensions = {
+  width: number;
+  height: number;
+  depth: number;
 };
 
-const ProductList = (props: ProductTypes) => {
-  const {data} = props;
+type Review = {
+  rating: number;
+  comment: string;
+  date: string; // ISO date string format
+  reviewerName: string;
+  reviewerEmail: string;
+};
+
+type Meta = {
+  createdAt: string; // ISO date string format
+  updatedAt: string; // ISO date string format
+  barcode: string;
+  qrCode: string; // URL to QR code image
+};
+
+type Product = {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  tags: string[];
+  brand: string;
+  sku: string;
+  weight: number;
+  dimensions: Dimensions;
+  warrantyInformation: string;
+  shippingInformation: string;
+  availabilityStatus: string;
+  reviews: Review[];
+  returnPolicy: string;
+  minimumOrderQuantity: number;
+  meta: Meta;
+  images: string[]; // Array of image URLs
+  thumbnail: string; // Thumbnail image URL
+};
+
+export type ProductTypes = {
+  products: Product;
+};
+
+type DataTypes = {
+  data: ProductTypes;
+};
+
+const ProductList = (props: DataTypes) => {
+  const {data, handleEndReach} = props;
   const styles = useStyles();
 
   const {navigateToScreen} = useNavigateToScreen();
   return (
-    <View style={{}}>
+    <View style={{flex: 1}}>
       <FlatList
         nestedScrollEnabled={true}
-        data={data}
-        scrollEnabled={false}
+        data={data?.data?.products}
+        scrollEnabled={true}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item, index}) => (
           <CardProduct
@@ -41,6 +92,7 @@ const ProductList = (props: ProductTypes) => {
         )}
         numColumns={2}
         contentContainerStyle={styles.container}
+        onEndReachedThreshold={2}
         columnWrapperStyle={{margin: 7}}
       />
     </View>

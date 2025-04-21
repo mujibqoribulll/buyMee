@@ -1,15 +1,27 @@
 import {useTheme} from '@react-navigation/native';
 import {useState} from 'react';
-import {Platform, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  ActivityIndicator,
+  GestureResponderEvent,
+  Platform,
+  StyleSheet,
+  TextInput,
+  View,
+} from 'react-native';
+import {IconMenu} from '../../src/assets';
+import ButtonIcon from '../button-icon';
 
 type InputTextSearchTypes = {
   placeholder: string;
   icon: React.ReactNode;
   value: string;
+  onChange: (text: string) => void;
+  isLoading: boolean;
+  onPress: (evnt: GestureResponderEvent) => void;
 };
 
 const InputTextSearch = (props: InputTextSearchTypes): JSX.Element => {
-  const {placeholder, icon, value} = props;
+  const {placeholder, icon, value, onChange, isLoading, onPress} = props;
   const styles = useStyles();
   const [isFocused, setIsFocused] = useState(false); // Untuk blur/focus efek
 
@@ -23,9 +35,21 @@ const InputTextSearch = (props: InputTextSearchTypes): JSX.Element => {
           style={styles.text}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          onChangeText={onChange}
         />
-        {icon}
+        {isLoading ? (
+          <ActivityIndicator size="small" color={'#0092AC'} />
+        ) : (
+          icon
+        )}
       </View>
+
+      <ButtonIcon
+        hasCount={false}
+        icon={<IconMenu width={20} height={20} />}
+        styleIcon={{borderWidth: 0}}
+        onPress={onPress}
+      />
     </View>
   );
 };
@@ -37,6 +61,10 @@ const useStyles = () => {
   return StyleSheet.create({
     container: {
       marginHorizontal: 10,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      // backgroundColor: 'red'
     },
     wrapperText: {
       flexDirection: 'row',
@@ -50,7 +78,7 @@ const useStyles = () => {
       borderRadius: 5,
     },
     text: {
-      width: '95%',
+      width: '85%',
       fontSize: 14,
       fontWeight: '400',
       color: colors.text,

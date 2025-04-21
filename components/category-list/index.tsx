@@ -59,6 +59,7 @@ const useStyles = () => {
   return StyleSheet.create({
     container: {
       marginHorizontal: 10,
+      flex:1,
     },
     wrapperCategory: {
       flexDirection: 'row',
