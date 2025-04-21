@@ -9,7 +9,7 @@ import {
   IconPlus,
   ImageFour,
 } from '../../src/assets';
-import {PlayfairDisplay} from '../../src/utils/fonts';
+import {Poppins} from '../../src/utils/fonts';
 import ButtonIcon from '../button-icon';
 import Gap from '../gap';
 
@@ -111,12 +111,12 @@ const useStyles = () => {
       alignItems: 'center',
     },
     title: {
-      fontFamily: PlayfairDisplay.semiBold,
+      fontFamily: Poppins.semiBold,
       fontSize: 14,
       color: colors.text,
     },
     desc: {
-      fontFamily: PlayfairDisplay.regular,
+      fontFamily: Poppins.regular,
       fontSize: 12,
       lineHeight: 20,
       color: colors.textInactive,
@@ -132,7 +132,7 @@ const useStyles = () => {
       padding: 0,
     },
     price: {
-      fontFamily: PlayfairDisplay.bold,
+      fontFamily: Poppins.bold,
       fontSize: 16,
       color: colors.text,
     },

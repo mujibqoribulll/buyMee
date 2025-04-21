@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {IconStar, ImageFour} from '../../src/assets';
 import Gap from '../gap';
-import {PlayfairDisplay} from '../../src/utils/fonts';
+import {Poppins} from '../../src/utils/fonts';
 
 type InitialProductType = {
   id?: number;
@@ -79,19 +79,19 @@ const useStyles = (width: any) => {
     },
     name: {
       fontSize: 13,
-      fontFamily: PlayfairDisplay.regular,
+      fontFamily: Poppins.regular,
       color: colors.textInactive,
       width: width / 2 - 70,
     },
     rate: {
       fontSize: 14,
-      fontFamily: PlayfairDisplay.bold,
+      fontFamily: Poppins.bold,
       color: colors.text,
     },
     price: {
       fontSize: 16,
       color: colors.text,
-      fontFamily: PlayfairDisplay.bold,
+      fontFamily: Poppins.bold,
     },
     wrapperRate: {
       flexDirection: 'row',

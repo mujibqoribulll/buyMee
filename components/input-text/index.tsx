@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import {IcEyes, IcEyesOff} from '../../src/assets';
-import { PlayfairDisplay } from '../../src/utils/fonts';
+import { Poppins } from '../../src/utils/fonts';
 
 type InputProps = {
   label?: string;
@@ -112,12 +112,12 @@ const useStyles = (colors: any) => {
       fontWeight: '600',
       color: colors.card,
       marginVertical: 10,
-      fontFamily: PlayfairDisplay.semiBold,
+      fontFamily: Poppins.semiBold,
     },
     textInput: {
       fontSize: 14,
       fontWeight: '400',
-      fontFamily: PlayfairDisplay.regular,
+      fontFamily: Poppins.regular,
       color: colors.textPlaceholder,
       ...Platform.select({
         android: {
@@ -143,7 +143,7 @@ const useStyles = (colors: any) => {
     helper: {
       fontSize: 10,
       color: colors.danger,
-      fontFamily: PlayfairDisplay.semiBold,
+      fontFamily: Poppins.semiBold,
     },
     formErr: {
       borderColor: colors.danger,

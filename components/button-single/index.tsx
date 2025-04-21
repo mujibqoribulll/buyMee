@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { PlayfairDisplay } from '../../src/utils/fonts';
+import { Poppins } from '../../src/utils/fonts';
 
 type ButtonType = {
   title: string;
@@ -47,7 +47,7 @@ const useStyles = () => {
       fontSize: 17,
       fontWeight: '400',
       color: colors.card,
-      fontFamily: PlayfairDisplay.semiBold,
+      fontFamily: Poppins.semiBold,
     },
     loading: {
       marginRight: 10,

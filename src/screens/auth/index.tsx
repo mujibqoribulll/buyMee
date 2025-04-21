@@ -20,7 +20,7 @@ import {useEffect} from 'react';
 import Toast from 'react-native-toast-message';
 import {isSubmitDisabled} from '../../helper/form';
 import {postLoginReset, postLogoutReset} from '../../slices/authSlice';
-import { PlayfairDisplay } from '../../utils/fonts';
+import { Poppins } from '../../utils/fonts';
 
 type FormStateType = {
   label: string;
@@ -136,7 +136,7 @@ const useStyles = (height: number, width: number) => {
       color: colors.container,
       fontSize: 28,
       marginBottom: 10,
-      fontFamily: PlayfairDisplay.medium,
+      fontFamily: Poppins.medium,
     },
     headerCard: {
       flex: 1,

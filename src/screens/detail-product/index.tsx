@@ -22,7 +22,7 @@ import ButtonIcon from '../../../components/button-icon';
 import Gap from '../../../components/gap';
 import ButtonIconText from '../../../components/button-icon-text';
 import ButtonSingle from '../../../components/button-single';
-import {PlayfairDisplay} from '../../utils/fonts';
+import {Poppins} from '../../utils/fonts';
 import BadgeVariant from '../../../components/badge-variant';
 import {useNavigateToScreen} from '../../helper/hooks';
 
@@ -175,18 +175,18 @@ const useStyles = (height: any) => {
     },
     textStyle: {
       color: colors.text,
-      fontFamily: PlayfairDisplay.extraBold,
+      fontFamily: Poppins.extraBold,
     },
     textReviews: {
       fontSize: 11,
       color: colors.textInactive,
-      fontFamily: PlayfairDisplay.regular,
+      fontFamily: Poppins.regular,
     },
     desc: {
       fontSize: 13,
       color: colors.text,
       lineHeight: 20,
-      fontFamily: PlayfairDisplay.medium,
+      fontFamily: Poppins.medium,
     },
     styleContainer: {
       borderColor: colors.text,
@@ -212,14 +212,14 @@ const useStyles = (height: any) => {
       width: '100%',
     },
     strikeTroughPrice: {
-      fontFamily: PlayfairDisplay.semiBold,
+      fontFamily: Poppins.semiBold,
       fontSize: 15,
       textDecorationLine: 'line-through',
       textDecorationStyle: 'solid',
       color: colors.containerLine,
     },
     price: {
-      fontFamily: PlayfairDisplay.extraBold,
+      fontFamily: Poppins.extraBold,
       fontSize: 15,
       color: colors.text,
     },

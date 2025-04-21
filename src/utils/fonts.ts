@@ -1,4 +1,4 @@
-export const PlayfairDisplay = {
+export const Poppins = {
     regular: 'Poppins-Regular',
     medium: 'Poppins-Medium',
     semiBold: 'Poppins-SemiBold',

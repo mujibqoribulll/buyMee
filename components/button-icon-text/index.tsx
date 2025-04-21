@@ -8,7 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import Gap from '../gap';
-import { PlayfairDisplay } from '../../src/utils/fonts';
+import { Poppins } from '../../src/utils/fonts';
 
 type Buttontypes = {
   label?: string;
@@ -45,7 +45,7 @@ const useStyles = () => {
     label: {
       fontSize: 12,
       color: colors.container,
-     fontFamily: PlayfairDisplay.bold,
+     fontFamily: Poppins.bold,
     },
   });
 };

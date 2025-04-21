@@ -2,7 +2,7 @@ import {GestureResponderEvent, StyleSheet, Text, View} from 'react-native';
 import ButtonIcon from '../button-icon';
 import {useTheme} from '@react-navigation/native';
 import Gap from '../gap';
-import { PlayfairDisplay } from '../../src/utils/fonts';
+import { Poppins } from '../../src/utils/fonts';
 
 type NavType = {
   leftIcon?: React.ReactNode;
@@ -68,7 +68,7 @@ const useStyles = () => {
     },
     label: {
       fontSize: 16,
-      fontFamily: PlayfairDisplay.bold,
+      fontFamily: Poppins.bold,
       color: colors.text,
     },
     doubleButton: {
