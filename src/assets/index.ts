@@ -29,6 +29,7 @@ import IconCheckbox from './icons/ic-checkbox.svg'
 import IconCheckBox from './icons/ic-checkbox-active.svg'
 import IconMenu from './icons/ic-menu.svg'
 import IcClose from './icons/ic-close.svg'
+import IcFilter from './icons/ic-filter.svg'
 
 
 
@@ -64,4 +65,5 @@ export {
     IconCheckBox,
     IconMenu,
     IcClose,
+    IcFilter,
 }

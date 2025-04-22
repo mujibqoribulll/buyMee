@@ -1,30 +1,43 @@
 import {useTheme} from '@react-navigation/native';
 import {
   ActivityIndicator,
+  StyleProp,
   StyleSheet,
   Text,
+  TextStyle,
   TouchableWithoutFeedback,
   View,
+  ViewProps,
+  ViewStyle,
 } from 'react-native';
-import { Poppins } from '../../src/utils/fonts';
+import {Poppins} from '../../src/utils/fonts';
 
 type ButtonType = {
   title: string;
   onPress: () => void;
-  isLoading: boolean;
+  isLoading: boolean | any;
+  disable?: boolean;
+  styleContainer?: StyleProp<ViewStyle>;
+  styleTitle?: StyleProp<TextStyle>;
 };
 
 const ButtonSingle = (props: ButtonType): JSX.Element => {
-  const {title, onPress, isLoading} = props;
+  const {title, onPress, isLoading, styleContainer, styleTitle, disable} =
+    props;
 
   const styles = useStyles();
   return (
-    <TouchableWithoutFeedback style={{flex: 1}} onPress={onPress}>
-      <View style={styles.container}>
+    <TouchableWithoutFeedback
+      style={{flex: 1}}
+      onPress={onPress}
+      disabled={disable}>
+      <View style={[styles.container, styleContainer]}>
         {isLoading && (
           <ActivityIndicator size="small" color="#fff" style={styles.loading} />
         )}
-        <Text style={styles.title}>{!isLoading ? title : 'Authenticate'}</Text>
+        <Text style={[styles.title, styleTitle]}>
+          {!isLoading ? title : 'Loading...'}
+        </Text>
       </View>
     </TouchableWithoutFeedback>
   );

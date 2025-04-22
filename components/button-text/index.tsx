@@ -13,13 +13,14 @@ type ButtonTextType = {
   action?: (event: GestureResponderEvent) => void;
   textStyles?: StyleProp<TextStyle>;
   textStylesActive?: StyleProp<TextStyle>
+  onPress?: () => void
 };
 
 const ButtonText = (props: ButtonTextType): JSX.Element => {
-  const {title, textStyles, textStylesActive} = props;
+  const {title, textStyles, textStylesActive, onPress} = props;
   const styles = useStyles()
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <Text style={[textStyles, textStylesActive, styles.textTitle]}>{title}</Text>
     </TouchableOpacity>
   );

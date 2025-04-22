@@ -119,6 +119,7 @@ const useStyles = (colors: any) => {
       fontWeight: '400',
       fontFamily: Poppins.regular,
       color: colors.textPlaceholder,
+      width: '90%',
       ...Platform.select({
         android: {
           paddingVertical: 8,

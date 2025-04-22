@@ -39,12 +39,17 @@ const HomePage = (props: HomePageTypes) => {
     product,
     form,
     modalSort,
+    OBJECT_SORTBY,
+    IsDisableFilter,
+    sort,
     function: {
       onRefresh,
       handleGetAllProduct,
       handleEndReach,
       setForm,
       setModalSort,
+      onSortFilter,
+      onSubmitFilter,
     },
   } = useHomeFunctions();
 
@@ -76,7 +81,7 @@ const HomePage = (props: HomePageTypes) => {
               isLoading={
                 product.loading === 'pending' && form.search.value.length > 0
               }
-              onPress={() => setModalSort((prevState) => !prevState)}
+              onPress={() => setModalSort(prevState => !prevState)}
             />
             <Gap height={10} />
             <BannerLarge data={dummyBanners} />
@@ -108,7 +113,16 @@ const HomePage = (props: HomePageTypes) => {
         columnWrapperStyle={{margin: 7}}
         showsVerticalScrollIndicator={false}
       />
-      <Modal isVisisble={modalSort} onClose={() => setModalSort(!modalSort)} />
+      <Modal
+        isVisisble={modalSort}
+        onClose={() => setModalSort(!modalSort)}
+        data={OBJECT_SORTBY}
+        onSortFilter={onSortFilter}
+        onSubmitFilter={onSubmitFilter}
+        IsDisableFilter={IsDisableFilter}
+        isLoading={product.loading === 'pending'}
+        sort={sort}
+      />
     </SafeAreaView>
   );
 };

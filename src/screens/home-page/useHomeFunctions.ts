@@ -12,12 +12,31 @@ interface ProductParams {
     limit?: number;   // Optional limit parameter
     skip?: number;
     select?: string[];
+    sortBy?: string
+    order?: string
 }
 
 export const useHomeFunctions = () => {
     const dispatch = useAppDispatch();
     const { product } = useAppSelector(state => state.home, shallowEqual);
     const [modalSort, setModalSort] = useState(false);
+    const [sort, setSort] = useState({
+        price: '',
+        order: ''
+    })
+
+
+    const OBJECT_SORTBY = {
+        price: [
+            { label: 'Title', value: 'title' },
+            { label: 'Price', value: 'price' }, { label: 'Rating 4 or Higher', value: 'rating' },
+        ],
+        sort: [
+            { label: 'Low to High', value: 'asc' },
+            { label: 'High to Low', value: 'desc' },
+        ],
+    }
+    let IsDisableFilter = !sort?.order && !sort?.price
     const dummyBanners = [
         {
             name: 'banner-1',
@@ -260,6 +279,10 @@ export const useHomeFunctions = () => {
         handleGetAllProduct('reset')
     }
 
+    const onSortFilter = (type: string, value: string) => {
+        setSort((prevState) => ({ ...prevState, [type]: value }))
+    }
+
     const onClickProduct = (item: InitialProductType) => {
 
     }
@@ -267,18 +290,10 @@ export const useHomeFunctions = () => {
         handleGetAllProduct('next')
     }
 
+
+
     useEffect(() => {
-        let cancel = false
-        setTimeout(() => {
-            if (!cancel) {
-                handleGetAllProduct('reset')
-            }
-
-        }, 1000)
-
-        return () => {
-            cancel = true
-        }
+        handleGetAllProduct('reset')
 
     }, [form.search.value])
 
@@ -297,15 +312,27 @@ export const useHomeFunctions = () => {
                 params.q = search.value ?? ''
             }
             params.limit = 20;
-            params.select = ['title', 'price'];
+            params.sortBy = sort?.price
+            params.order = sort?.order,
+                params.select = ['title', 'price', 'rating'];
 
             dispatch(getAllProduct({ params, paginate }));
         }
 
 
+    const onSubmitFilter = () => {
+
+        if (sort?.order || sort?.price) {
+            handleGetAllProduct('reset')
+            setModalSort(false)
+        }
+
+    }
+
+
 
     return {
-        dummyBanners, dummyCategory, dummyProduct, refreshing, product, form, modalSort, function: {
+        dummyBanners, dummyCategory, dummyProduct, refreshing, product, form, modalSort, IsDisableFilter, OBJECT_SORTBY, sort, function: {
             onClickProduct,
             handleGetAllProduct,
             setRefreshing,
@@ -313,6 +340,8 @@ export const useHomeFunctions = () => {
             handleEndReach,
             setForm,
             setModalSort,
+            onSortFilter,
+            onSubmitFilter,
         }
     }
 }
