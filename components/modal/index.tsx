@@ -11,7 +11,7 @@ import {IcClose} from '../../src/assets';
 import ButtonIcon from '../button-icon';
 import {Poppins} from '../../src/utils/fonts';
 import ButtonSingle from '../button-single';
-import ButtonRoundFull from '../button-round';
+import ButtonRoundFull from '../button-round-full';
 
 interface ObjectTypes {
   label: string;
