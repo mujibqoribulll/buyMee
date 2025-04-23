@@ -4,6 +4,8 @@ export const ENDPOINTS = {
     },
     HOME: {
         PRODUCT: '/products/search',
+        PRODUCT_WITH_CATEGORY: '/products/category/:name',
+        CATEGORY: '/products/category-list'
     }
 }
 

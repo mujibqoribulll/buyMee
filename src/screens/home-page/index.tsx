@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -42,6 +43,8 @@ const HomePage = (props: HomePageTypes) => {
     OBJECT_SORTBY,
     IsDisableFilter,
     sort,
+    category,
+    filterByCategory,
     function: {
       onRefresh,
       handleGetAllProduct,
@@ -50,11 +53,14 @@ const HomePage = (props: HomePageTypes) => {
       setModalSort,
       onSortFilter,
       onSubmitFilter,
+      handleGetAllCategory,
+      handleFilterByCategory,
     },
   } = useHomeFunctions();
 
   useEffect(() => {
     handleGetAllProduct('reset');
+    handleGetAllCategory();
   }, []);
 
   return (
@@ -88,9 +94,11 @@ const HomePage = (props: HomePageTypes) => {
             <Gap height={10} />
             <View style={{height: 70}}>
               <CategoryList
-                data={dummyCategory}
+                data={category}
                 title="Categories"
                 action="See all"
+                handleFilterByCategory={handleFilterByCategory}
+                filterByCategory={filterByCategory}
               />
             </View>
             <Gap height={10} />
@@ -112,6 +120,11 @@ const HomePage = (props: HomePageTypes) => {
         onEndReached={handleEndReach}
         columnWrapperStyle={{margin: 7}}
         showsVerticalScrollIndicator={false}
+        ListFooterComponent={
+          product.loading !== 'pending' ? (
+            <ActivityIndicator size="small" color={'#0092AC'}  />
+          ) : null
+        }
       />
       <Modal
         isVisisble={modalSort}

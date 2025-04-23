@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loadingType } from "../store/types";
-import { getAllProduct } from "./homeThunk";
+import { getAllCategory, getAllProduct } from "./homeThunk";
 
 
 type InitialState = {
@@ -11,12 +11,18 @@ type InitialState = {
 
 type HomeState = {
     product: InitialState
+    category: InitialState
 }
 
 const initialState: HomeState = {
     product: {
         loading: 'idle',
         data: {},
+        message: ''
+    },
+    category: {
+        loading: 'idle',
+        data: [],
         message: ''
     }
 }
@@ -45,6 +51,22 @@ export const homeSlice = createSlice({
         builder.addCase(getAllProduct.rejected, (state, action) => {
             state.product.loading = 'failed'
             state.product.message = 'data gagal diambil'
+        });
+
+        builder.addCase(getAllCategory.pending, (state, action) => {
+            state.category.loading = 'pending'
+        });
+        builder.addCase(getAllCategory.fulfilled, (state, action) => {
+            if (action.payload) {
+                state.category.loading = 'succeeded';
+                state.category.data = action.payload;
+            } else {
+                state.category.loading = 'failed'
+            }
+        });
+        builder.addCase(getAllCategory.rejected, (state, action) => {
+            state.category.loading = 'failed',
+                state.category.message = 'data gagal diambil'
         })
     }
 })

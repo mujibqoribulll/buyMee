@@ -11,7 +11,7 @@ import {IcClose} from '../../src/assets';
 import ButtonIcon from '../button-icon';
 import {Poppins} from '../../src/utils/fonts';
 import ButtonSingle from '../button-single';
-import ButtonRound from '../button-round';
+import ButtonRoundFull from '../button-round';
 
 interface ObjectTypes {
   label: string;
@@ -87,7 +87,7 @@ const Modal: FC<ModalSelectCustomerProps> = props => {
           <View style={styles.sectionFilter}>
             {data?.price?.map(obj => {
               return (
-                <ButtonRound
+                <ButtonRoundFull
                   title={obj?.label}
                   key={obj?.label}
                   onPress={() => handlePress('price', obj?.value)}
@@ -110,7 +110,7 @@ const Modal: FC<ModalSelectCustomerProps> = props => {
           <View style={styles.sectionFilter}>
             {data?.sort?.map((obj, idx) => {
               return (
-                <ButtonRound
+                <ButtonRoundFull
                   title={obj?.label}
                   key={idx}
                   onPress={() => handlePress('order', obj?.value)}

@@ -7,15 +7,15 @@ import { ServiceGetParams, setPaginationData, setPaginationParams } from "../hel
 
 export const getAllProduct = createAsyncThunk(
     'home/getAllProduct',
-    async ({ params, paginate }: ServiceGetParams, { rejectWithValue, getState }) => {
+    async ({ params, paginate, filterByCategory }: ServiceGetParams, { rejectWithValue, getState }) => {
 
         try {
             const { home } = getState() as RootState
             if (home?.product?.data?.skip < home?.product?.data?.total || paginate === 'reset') {
-                
+
                 params = setPaginationParams(params, home?.product?.data, paginate)
-                let response = await HOME.getAllProduct(params);
-                response.data.skip =  response?.data?.skip
+                let response = !filterByCategory ? await HOME.getAllProduct(params) : await HOME.getAllProductWithCategory(params, filterByCategory);
+                response.data.skip = response?.data?.skip
                 response.data.limit = response?.data?.limit
                 response.data.total = response?.data?.total
                 response.data.products = setPaginationData(
@@ -34,3 +34,13 @@ export const getAllProduct = createAsyncThunk(
         }
     },
 );
+
+export const getAllCategory = createAsyncThunk('home/getAllCategory', async (_, { rejectWithValue }) => {
+
+    try {
+        let response = await HOME.getAllCategory()
+        return response.data
+    } catch (error: any) {
+        return rejectWithValue(setErrorMessage(error));
+    }
+})

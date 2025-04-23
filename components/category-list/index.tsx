@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   GestureResponderEvent,
   ScrollView,
@@ -10,6 +11,7 @@ import {
 import ButtonText from '../button-text';
 import {useTheme} from '@react-navigation/native';
 import Gap from '../gap';
+import ButtonRound from '../button-round';
 
 type CategoryTypes = {
   id: number;
@@ -19,11 +21,13 @@ type CategoryTypes = {
 type CategoryListType = {
   title: string;
   action: string;
-  data: CategoryTypes[];
+  data: any;
+  handleFilterByCategory?: (type: string, value: string) => void;
+  filterByCategory?: string;
 };
 
 const CategoryList = (props: CategoryListType) => {
-  const {data, action, title} = props;
+  const {data, action, title, handleFilterByCategory, filterByCategory} = props;
 
   const styles = useStyles();
   return (
@@ -33,21 +37,33 @@ const CategoryList = (props: CategoryListType) => {
         <ButtonText title={action} textStyles={styles.textActionStyle} />
       </View>
       <Gap height={10} />
-      <ScrollView
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        pagingEnabled={true}
-        nestedScrollEnabled={true}>
-        {data.map((item, index) => (
-          <TouchableWithoutFeedback key={index}>
-            <View style={[styles.card, index === 0 && styles.cardActive]}>
-              <Text style={[styles.text, index === 0 && styles.textActive]}>
-                {item?.name}
-              </Text>
-            </View>
-          </TouchableWithoutFeedback>
-        ))}
-      </ScrollView>
+      {data?.loading !== 'pending' ? (
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled={true}
+          nestedScrollEnabled={true}>
+          <View style={styles.contentCategory}>
+            {data?.data?.map?.((title, index) => (
+              <ButtonRound
+                title={title}
+                key={index}
+                onPress={() => handleFilterByCategory?.('tab-home', title)}
+                styleActive={
+                  filterByCategory === title ? styles.cardActive : null
+                }
+                textStylesActive={
+                  filterByCategory === title ? styles.textActionStyle : null
+                }
+              />
+            ))}
+          </View>
+        </ScrollView>
+      ) : (
+        <View style={styles.loading}>
+          <ActivityIndicator size={'small'} color={'#0092AC'} />
+        </View>
+      )}
     </View>
   );
 };
@@ -59,7 +75,7 @@ const useStyles = () => {
   return StyleSheet.create({
     container: {
       marginHorizontal: 10,
-      flex:1,
+      flex: 1,
     },
     wrapperCategory: {
       flexDirection: 'row',
@@ -70,11 +86,12 @@ const useStyles = () => {
       fontSize: 16,
       fontWeight: '500',
       color: colors.text,
+      textTransform: 'capitalize',
     },
     textActionStyle: {
       fontSize: 14,
       fontWeight: '500',
-      color: colors.textActive,
+      color: colors.card,
     },
     card: {
       margin: 5,
@@ -96,6 +113,16 @@ const useStyles = () => {
       fontSize: 12,
       color: colors.container,
       fontWeight: '500',
+    },
+    loading: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    contentCategory: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 5,
     },
   });
 };

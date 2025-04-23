@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { InitialProductType } from "../../../components/product-list";
 import { ImageFour, ImageOne, ImageThree, ImageTwo } from "../../assets";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { getAllProduct } from "../../slices/homeThunk";
+import { getAllCategory, getAllProduct } from "../../slices/homeThunk";
 import { shallowEqual } from "react-redux";
 import { PaginationStatus, setPaginationParams } from "../../helper";
 import { useForm } from "../../helper/form";
@@ -18,13 +18,13 @@ interface ProductParams {
 
 export const useHomeFunctions = () => {
     const dispatch = useAppDispatch();
-    const { product } = useAppSelector(state => state.home, shallowEqual);
+    const { product, category } = useAppSelector(state => state.home, shallowEqual);
     const [modalSort, setModalSort] = useState(false);
     const [sort, setSort] = useState({
         price: '',
         order: ''
     })
-
+    const [filterByCategory, setFilterByCategory] = useState('')
 
     const OBJECT_SORTBY = {
         price: [
@@ -277,6 +277,11 @@ export const useHomeFunctions = () => {
     const onRefresh = () => {
         setRefreshing(true);
         handleGetAllProduct('reset')
+        dispatch(getAllCategory())
+    }
+
+    const handleGetAllCategory = () => {
+        dispatch(getAllCategory())
     }
 
     const onSortFilter = (type: string, value: string) => {
@@ -290,12 +295,14 @@ export const useHomeFunctions = () => {
         handleGetAllProduct('next')
     }
 
-
+    const handleFilterByCategory = (type: string, value: string) => {
+        setFilterByCategory((prev) => (prev === value ? '' : value));
+    }
 
     useEffect(() => {
         handleGetAllProduct('reset')
 
-    }, [form.search.value])
+    }, [form.search.value, filterByCategory])
 
     useEffect(() => {
         if (refreshing) {
@@ -315,8 +322,7 @@ export const useHomeFunctions = () => {
             params.sortBy = sort?.price
             params.order = sort?.order,
                 params.select = ['title', 'price', 'rating'];
-
-            dispatch(getAllProduct({ params, paginate }));
+            dispatch(getAllProduct({ params, paginate, filterByCategory }));
         }
 
 
@@ -331,8 +337,9 @@ export const useHomeFunctions = () => {
 
 
 
+
     return {
-        dummyBanners, dummyCategory, dummyProduct, refreshing, product, form, modalSort, IsDisableFilter, OBJECT_SORTBY, sort, function: {
+        dummyBanners, dummyCategory, dummyProduct, refreshing, product, form, modalSort, IsDisableFilter, OBJECT_SORTBY, sort, category, filterByCategory, function: {
             onClickProduct,
             handleGetAllProduct,
             setRefreshing,
@@ -342,6 +349,8 @@ export const useHomeFunctions = () => {
             setModalSort,
             onSortFilter,
             onSubmitFilter,
+            handleGetAllCategory,
+            handleFilterByCategory,
         }
     }
 }
