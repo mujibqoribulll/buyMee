@@ -16,7 +16,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import {useTheme} from '@react-navigation/native';
+import {useRoute, useTheme} from '@react-navigation/native';
 import {ImageFour} from '../../assets';
 import ButtonIcon from '../../../components/button-icon';
 import Gap from '../../../components/gap';
@@ -25,16 +25,41 @@ import ButtonSingle from '../../../components/button-single';
 import {Poppins} from '../../utils/fonts';
 import BadgeVariant from '../../../components/badge-variant';
 import {useNavigateToScreen} from '../../helper/hooks';
+import {useDetailProductFunctions} from './useDetailProductFunctions';
+import {useEffect} from 'react';
 
 const DetailProduct = (props: any) => {
+  const {navigation} = props;
+  const route = useRoute();
+  const {params} = route;
+  const typedParams = params as {id: number};
   const {height} = useWindowDimensions();
   const styles = useStyles(height);
   const {navigateToScreen} = useNavigateToScreen();
+  const {
+    getProductDetail,
+    functions: {getServiceProductDetail},
+  } = useDetailProductFunctions();
+  
+  const {loading, data, message} = getProductDetail;
+  useEffect(() => {
+    if (typedParams?.id) {
+      getServiceProductDetail(typedParams?.id);
+    }
+  }, [typedParams?.id]);
 
   return (
     <SafeAreaView style={styles.safearea}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Image source={ImageFour} style={styles.image} resizeMode="cover" />
+        {data?.images?.[0] ? (
+          <Image
+            source={{uri: data?.images?.[0]}}
+            style={styles.image}
+            resizeMode="cover"
+          />
+        ) : (
+          <Image source={ImageFour} style={styles.image} resizeMode="cover" />
+        )}
         <View style={styles.wrapperNavTransparant}>
           <ButtonIcon
             icon={<IconArrowLeft width={20} height={20} />}
@@ -49,7 +74,7 @@ const DetailProduct = (props: any) => {
         </View>
         <View style={styles.wrapperInformation}>
           <View style={styles.productInformation}>
-            <Text style={styles.nameProduct}>Iphone 16 Pro</Text>
+            <Text style={styles.nameProduct}>{data?.title}</Text>
             <ButtonIconText
               label={'On sale'}
               icon={<IconPercent width={20} height={20} />}
@@ -59,7 +84,7 @@ const DetailProduct = (props: any) => {
           <View style={styles.reviewSection}>
             <ButtonIconText
               icon={<IconStar width={20} height={20} />}
-              label="9.8"
+              label={data?.rating}
               styleContainer={styles.badgeRating}
               textStyle={styles.textStyle}
             />
@@ -68,39 +93,22 @@ const DetailProduct = (props: any) => {
               icon={<IconDeliver width={20} height={20} />}
               styleContainer={styles.badgeRating}
               textStyle={styles.textStyle}
-              label="9.8"
+              label={data?.stock}
             />
             <Gap width={5} />
-            <Text style={styles.textReviews}>117 reviews</Text>
+            <Text style={styles.textReviews}>
+              {data?.reviews?.length} reviews
+            </Text>
           </View>
           <Gap height={10} />
-          <Text style={styles.desc}>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-            fugit nam tenetur non nobis deleniti, ducimus molestias! Corrupti,
-            est blanditiis qui eius expedita ullam porro laborum cum, veniam
-            voluptate aliquam?
-          </Text>
-
-          <Gap height={10} />
-          <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
-            {[1, 2, 3].map((item, index) => (
-              <BadgeVariant
-                title={
-                  index === 0 ? '1 GB' : index === 1 ? '854 GB' : '1000 GB'
-                }
-                textStyles={styles.styleContainer}
-                textStylesActive={index === 0 && styles.styleContainerActive}
-                key={index}
-              />
-            ))}
-          </View>
+          <Text style={styles.desc}>{data?.description}</Text>
         </View>
       </ScrollView>
       <View style={styles.footer}>
         {/* section price */}
         <View style={{flex: 1}}>
-          <Text style={styles.strikeTroughPrice}>$650.00</Text>
-          <Text style={styles.price}>$570.00</Text>
+          <Text style={styles.strikeTroughPrice}>${data?.price + 2}</Text>
+          <Text style={styles.price}>${data?.price}</Text>
         </View>
         <View style={{flex: 2}}>
           <ButtonSingle

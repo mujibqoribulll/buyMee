@@ -12,3 +12,7 @@ export const getAllProductWithCategory = (params: any, name: string) => {
 export const getAllCategory = () => {
     return axios.get(ENDPOINTS.HOME.CATEGORY,);
 };
+
+export const getProductDetail = (id: any) => {
+    return axios.get(ENDPOINTS.HOME.PRODUCT_DETAIL.replace(':id', id))
+}

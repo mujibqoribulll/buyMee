@@ -21,7 +21,7 @@ import CategoryList from '../../../components/category-list';
 import ProductList from '../../../components/product-list';
 import {useHomeFunctions} from './useHomeFunctions';
 import {useNavigateToScreen} from '../../helper/hooks';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CardProduct from '../../../components/card-product';
 import Modal from '../../../components/modal';
 
@@ -107,7 +107,7 @@ const HomePage = (props: HomePageTypes) => {
         renderItem={({item, index}) => (
           <CardProduct
             data={item}
-            key={index}
+            key={item?.id}
             onPress={() => navigateToScreen('detail-product', item)}
           />
         )}
@@ -121,8 +121,8 @@ const HomePage = (props: HomePageTypes) => {
         columnWrapperStyle={{margin: 7}}
         showsVerticalScrollIndicator={false}
         ListFooterComponent={
-          product.loading !== 'pending' ? (
-            <ActivityIndicator size="small" color={'#0092AC'}  />
+          product?.data?.products?.length !== product?.data?.total ? (
+            <ActivityIndicator size="small" color={'#0092AC'} />
           ) : null
         }
       />

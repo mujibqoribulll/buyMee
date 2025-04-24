@@ -51,18 +51,3 @@ export const validatePassword = (password: any, label?: string): Validation => {
 
     return { message, error };
 };
-
-
-export const setErrorMessage = (action: any) => {
-    if (typeof action === 'string') return action;
-    let error = action?.paylaod || action;
-    let message =
-      error?.response?.data?.data?.message ??
-      error?.response?.data?.meta?.message ??
-      error?.response?.data?.message ??
-      error?.response?.message ??
-      error?.message ??
-      'Server Sedang Mengalami Gangguan';
-  
-    return message;
-  };

@@ -1,3 +1,6 @@
+import { InitialState } from "../slices/homeSlice";
+import { ResetStatusHook } from "../store/types";
+
 export type PaginationStatus = 'next' | 'disabled' | 'reset' | 'refresh';
 
 export type ServiceGetParams = {
@@ -47,4 +50,28 @@ export const setErrorMessage = (action: any) => {
     'Server Sedang Mengalami Gangguan';
 
   return message;
+};
+
+
+export const resetStatusHook = (
+  initialState: InitialState,
+  state: InitialState,
+  key: ResetStatusHook,
+) => {
+  let stateNew = {...state};
+  switch (key) {
+    case 'loading':
+      stateNew.loading = 'idle';
+      stateNew.message = '';
+      break;
+    case 'data':
+      stateNew.data = {};
+      break;
+    case 'all':
+      stateNew = initialState;
+      break;
+    default:
+      break;
+  }
+  return stateNew;
 };

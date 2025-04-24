@@ -15,3 +15,5 @@ export default interface InitialState {
   pagination?: paginationType;
   [key: string]: any;
 }
+
+export type ResetStatusHook = "loading" | "data" | "all" | undefined;

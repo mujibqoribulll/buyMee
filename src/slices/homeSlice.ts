@@ -3,7 +3,7 @@ import { loadingType } from "../store/types";
 import { getAllCategory, getAllProduct } from "./homeThunk";
 
 
-type InitialState = {
+export type InitialState = {
     loading: loadingType;
     data?: any;
     message?: any;

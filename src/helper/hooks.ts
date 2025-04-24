@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 
+
 export const useNavigateToScreen = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
 
     const navigateToScreen = (screenName: string, params?: object) => {
         if (screenName === 'back') {
