@@ -1,11 +1,6 @@
 import {useTheme} from '@react-navigation/native';
 import {FC} from 'react';
-import {
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import {StyleSheet, Text, useWindowDimensions, View} from 'react-native';
 import ReactNativeModal from 'react-native-modal';
 import {IcClose} from '../../src/assets';
 import ButtonIcon from '../button-icon';
@@ -19,11 +14,11 @@ interface ObjectTypes {
 }
 
 interface SortTypes {
-  price: string
-  order: string
+  price: string;
+  order: string;
 }
 
-export interface ModalSelectCustomerProps {
+export interface ModalSelectCustomProps {
   navigation?: any;
   value?: any;
   isVisisble?: boolean;
@@ -35,10 +30,10 @@ export interface ModalSelectCustomerProps {
   onSubmitFilter?: () => void;
   IsDisableFilter?: boolean;
   isLoading?: string;
-  sort?: SortTypes
+  sort?: SortTypes;
 }
 
-const Modal: FC<ModalSelectCustomerProps> = props => {
+const Modal: FC<ModalSelectCustomProps> = props => {
   const {
     isVisisble,
     onClose,
@@ -97,9 +92,7 @@ const Modal: FC<ModalSelectCustomerProps> = props => {
                       : null
                   }
                   textStylesActive={
-                    sort?.price === obj?.value
-                      ? styles.textStylesActive
-                      : null
+                    sort?.price === obj?.value ? styles.textStylesActive : null
                   }
                 />
               );
@@ -120,9 +113,7 @@ const Modal: FC<ModalSelectCustomerProps> = props => {
                       : null
                   }
                   textStylesActive={
-                    sort?.order === obj?.value
-                      ? styles.textStylesActive
-                      : null
+                    sort?.order === obj?.value ? styles.textStylesActive : null
                   }
                 />
               );
@@ -206,7 +197,7 @@ const useStyles = () => {
       backgroundColor: colors.textActive,
     },
     textStylesActive: {
-      color: colors.card
-    }
+      color: colors.card,
+    },
   });
 };

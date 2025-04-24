@@ -11,13 +11,16 @@ import {
 import {IconStar, ImageFour} from '../../src/assets';
 import Gap from '../gap';
 import {Poppins} from '../../src/utils/fonts';
+import {useState} from 'react';
+
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 type InitialProductType = {
   id?: number;
   title: string;
   price: number;
   rating: number;
-  image: string;
+  images: string;
 };
 
 type ProductTypes = {
@@ -29,13 +32,35 @@ const CardProduct = (props: ProductTypes): JSX.Element => {
   const {data, onPress} = props;
   const {width} = useWindowDimensions();
   const styles = useStyles(width);
+  const [loading, setLoading] = useState(true);
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.container}>
-        <View style={styles.card}>
-          {/* image */}
-          <Image source={ImageFour} resizeMode="cover" style={styles.image} />
-        </View>
+        {loading ? (
+          <SkeletonPlaceholder>
+            <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
+              <SkeletonPlaceholder.Item>
+                <SkeletonPlaceholder.Item
+                  width={200}
+                  height={150}
+                  borderTopEndRadius={20}
+                  borderBottomEndRadius={20}
+                />
+              </SkeletonPlaceholder.Item>
+            </SkeletonPlaceholder.Item>
+          </SkeletonPlaceholder>
+        ) : (
+          <View style={styles.card}>
+            {/* image */}
+            <Image
+              source={{uri: data?.images?.[0]}}
+              resizeMode="contain"
+              style={styles.image}
+              onLoadStart={() => setLoading(true)}
+              onLoadEnd={() => setLoading(false)}
+            />
+          </View>
+        )}
         <View style={styles.wrapperContent}>
           <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
             {data?.title}

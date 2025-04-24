@@ -320,8 +320,8 @@ export const useHomeFunctions = () => {
             }
             params.limit = 20;
             params.sortBy = sort?.price
-            params.order = sort?.order,
-                params.select = ['title', 'price', 'rating'];
+            params.order = sort?.order;
+            params.select = ['title', 'price', 'rating', 'id', 'images'];
             dispatch(getAllProduct({ params, paginate, filterByCategory }));
         }
 
