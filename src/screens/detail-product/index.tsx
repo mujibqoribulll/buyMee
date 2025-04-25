@@ -23,12 +23,9 @@ import Gap from '../../../components/gap';
 import ButtonIconText from '../../../components/button-icon-text';
 import ButtonSingle from '../../../components/button-single';
 import {Poppins} from '../../utils/fonts';
-import BadgeVariant from '../../../components/badge-variant';
 import {useNavigateToScreen} from '../../helper/hooks';
 import {useDetailProductFunctions} from './useDetailProductFunctions';
 import {useEffect} from 'react';
-import {useAppSelector} from '../../store/hooks';
-import {shallowEqual} from 'react-redux';
 
 const DetailProduct = (props: any) => {
   const {navigation} = props;
@@ -40,14 +37,12 @@ const DetailProduct = (props: any) => {
   const {navigateToScreen} = useNavigateToScreen();
   const {
     getProductDetail,
+    addToCart,
     functions: {getServiceProductDetail, handleAddCart},
   } = useDetailProductFunctions();
 
   const {loading, data, message} = getProductDetail;
-  const {loading: loadingCart, message: messageCart} = useAppSelector(
-    state => state.cart,
-    shallowEqual,
-  );
+
   useEffect(() => {
     if (typedParams?.id) {
       getServiceProductDetail(typedParams?.id);
@@ -60,6 +55,7 @@ const DetailProduct = (props: any) => {
     payload.description = data?.description;
     payload.price = data?.price;
     payload.id = data?.id;
+    payload.image = data?.images[0];
     handleAddCart(payload);
   };
 
@@ -122,13 +118,15 @@ const DetailProduct = (props: any) => {
       <View style={styles.footer}>
         {/* section price */}
         <View style={{flex: 1}}>
-          <Text style={styles.strikeTroughPrice}>${(data?.price || 0) + 2}</Text>
+          <Text style={styles.strikeTroughPrice}>
+            ${(data?.price || 0) + 2}
+          </Text>
           <Text style={styles.price}>${data?.price || 0}</Text>
         </View>
         <View style={{flex: 2}}>
           <ButtonSingle
             title="Add to Cart"
-            isLoading={loadingCart === 'pending'}
+            isLoading={addToCart?.loading === 'pending'}
             onPress={onSubmit}
           />
         </View>

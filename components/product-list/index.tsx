@@ -15,6 +15,9 @@ export type InitialProductType = {
   price: number;
   rating?: number;
   image: string;
+  description?: string;
+  title?: string;
+  qty?:number;
 };
 
 type Dimensions = {

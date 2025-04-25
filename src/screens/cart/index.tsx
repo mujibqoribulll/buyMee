@@ -8,11 +8,20 @@ import CartList from '../../../components/cart-list';
 import {useCartFunctions} from './useCartFunctions';
 import Gap from '../../../components/gap';
 import ButtonSingle from '../../../components/button-single';
+import {useAppSelector} from '../../store/hooks';
+import {shallowEqual} from 'react-redux';
+import ModalAction from '../../../components/modal-action';
 
 const Cart = () => {
   const styles = useStyles();
   const {navigateToScreen} = useNavigateToScreen();
-  const {cartProducts} = useCartFunctions();
+  const {
+    cart,
+    totalPrice,
+    isDeletedProduct,
+    function: {handleDelete, handleCloseDeleteModal, onPressDelete},
+  } = useCartFunctions();
+
   return (
     <SafeAreaView style={styles.safearea}>
       <Nav
@@ -23,16 +32,24 @@ const Cart = () => {
       />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Gap height={10} />
-        <CartList data={cartProducts} />
+        <CartList data={cart} handleDelete={data => handleDelete(data)} />
       </ScrollView>
-      <View style={styles.footer}>
-        {/* section price */}
-        <ButtonSingle
-          title="Checkout $480.00"
-          // isLoading={login.loading === 'pending'}
-          // onPress={onSubmit}
-        />
-      </View>
+
+      {/* section price */}
+      {cart?.length > 0 && (
+        <View style={styles.footer}>
+          <ButtonSingle
+            title={`$ ${totalPrice}`}
+            // isLoading={login.loading === 'pending'}
+            // onPress={onSubmit}
+          />
+        </View>
+      )}
+      <ModalAction
+        isVisisble={isDeletedProduct}
+        onClose={handleCloseDeleteModal}
+        onPress={onPressDelete}
+      />
     </SafeAreaView>
   );
 };
@@ -53,6 +70,6 @@ const useStyles = () => {
       padding: 20,
       borderTopColor: colors.border,
       borderTopWidth: 1,
-    }
+    },
   });
 };

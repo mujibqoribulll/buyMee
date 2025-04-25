@@ -30,7 +30,7 @@ export const toastConfig = {
           borderRadius: 6,
         }}
       >
-        <Text style={{ color: 'white' }}>Lihat</Text>
+        <Text style={{ color: 'white' }}>View</Text>
       </TouchableOpacity>
     </View>
   ),

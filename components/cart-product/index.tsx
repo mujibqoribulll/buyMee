@@ -15,11 +15,16 @@ import Gap from '../gap';
 
 type CartTypes = {
   data: InitialProductType;
+  handleDelete?: (data: any) => void;
 };
 
 const CartProduct = (props: CartTypes): JSX.Element => {
-  const {data} = props;
+  const {data, handleDelete} = props;
   const styles = useStyles();
+
+  const handleDeleteCart = () => {
+    handleDelete?.(data);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -30,29 +35,37 @@ const CartProduct = (props: CartTypes): JSX.Element => {
           />
         </View>
         <Gap width={10} />
-        <Image source={ImageFour} resizeMode="cover" style={styles.image} />
+        {data?.image && (
+          <Image
+            source={{uri: data?.image}}
+            resizeMode="cover"
+            style={styles.image}
+          />
+        )}
+
         <View style={styles.sectionCart}>
           <View style={styles.sectionDesc}>
             <View style={styles.sectionTop}>
-              <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
-                Xbox seris X
+              <Text style={styles.title} numberOfLines={2} ellipsizeMode="head">
+                {data?.title || 'Lorem, ipsum dolor sit amet consectetur'}
               </Text>
-              <View>
+              <View style={{height: '100%'}}>
                 <ButtonIcon
                   icon={<IconDeleteGray width={20} height={20} />}
                   styleIcon={styles.styleIcon}
+                  onPress={handleDeleteCart}
                 />
               </View>
             </View>
             <Text numberOfLines={2} ellipsizeMode="tail" style={styles.desc}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil,
-              obcaecati.
+              {data?.description ||
+                'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam, reprehenderit.'}
             </Text>
           </View>
           <Gap height={10} />
           <View style={styles.sectionPrice}>
             <View>
-              <Text style={styles.price}>$670.00</Text>
+              <Text style={styles.price}>$ {data?.price || 0}</Text>
             </View>
             <View style={styles.sectionFooter}>
               <ButtonIcon
@@ -60,7 +73,7 @@ const CartProduct = (props: CartTypes): JSX.Element => {
                 styleIcon={styles.styleFooterAction}
               />
               <Gap width={20} />
-              <Text style={styles.price}>10</Text>
+              <Text style={styles.price}>{data?.qty || 1}</Text>
               <Gap width={20} />
               <ButtonIcon
                 icon={<IconPlus width={15} height={15} />}
@@ -114,6 +127,7 @@ const useStyles = () => {
       fontFamily: Poppins.semiBold,
       fontSize: 14,
       color: colors.text,
+      width: '90%',
     },
     desc: {
       fontFamily: Poppins.regular,
@@ -122,9 +136,11 @@ const useStyles = () => {
       color: colors.textInactive,
     },
     sectionTop: {
+      flexWrap: 'wrap',
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      gap: 2,
     },
     styleIcon: {
       borderWidth: 0,

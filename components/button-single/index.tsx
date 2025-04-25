@@ -13,9 +13,9 @@ import {
 import {Poppins} from '../../src/utils/fonts';
 
 type ButtonType = {
-  title: string;
-  onPress: () => void;
-  isLoading: boolean | any;
+  title: string | number;
+  onPress?: () => void;
+  isLoading?: boolean | any;
   disable?: boolean;
   styleContainer?: StyleProp<ViewStyle>;
   styleTitle?: StyleProp<TextStyle>;

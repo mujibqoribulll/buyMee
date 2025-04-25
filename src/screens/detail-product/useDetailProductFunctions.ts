@@ -1,9 +1,10 @@
 import { shallowEqual } from "react-redux";
 import { useGetProductDetail } from "../../hooks/detailProduct"
-import { addToCartSuccess, addToCartRejected, addToCartStart } from "../../slices/cartSlice";
+import { addToCartSuccess, addToCartRejected, addToCartStart, addToCartReset } from "../../slices/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import Toast from "react-native-toast-message";
 import { useNavigateToScreen } from "../../helper/hooks";
+import { useEffect } from "react";
 
 interface AddCartType {
     description: string;
@@ -14,32 +15,45 @@ interface AddCartType {
 
 export const useDetailProductFunctions = () => {
     const { getProductDetail, getServiceProductDetail, reset } = useGetProductDetail();
-    const { data, message } = useAppSelector(state => state.cart, shallowEqual)
+    const { addToCart } = useAppSelector(state => state.cart, shallowEqual)
+    console.log('addToCart', addToCart.message)
     const { navigateToScreen } = useNavigateToScreen()
-    console.log('data4', JSON.stringify(data, null, 2))
     const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        if (addToCart.message) {
+            Toast.show({
+                type: 'successWithAction',
+                text1: addToCart.message,
+                text2: 'You can review your cart now.',
+                onPress: () => {
+                    navigateToScreen('cart');
+                },
+            });
+        }
+    }, [addToCart.message])
+
+    useEffect(() => {
+        return () => {
+            dispatch(addToCartReset())
+        }
+    }, [])
+
 
     const handleAddCart = (data: AddCartType) => {
         dispatch(addToCartStart())
         setTimeout(() => {
             try {
                 dispatch(addToCartSuccess(data))
-                Toast.show({
-                    type: 'successWithAction',
-                    text1: message,
-                    text2: 'You can review your cart now.',
-                    onPress: () => {
-                        navigateToScreen('cart');
-                    },
-                });
+
             } catch (error) {
                 dispatch(addToCartRejected())
             }
-        }, 5000)
+        }, 2000)
 
     }
 
 
 
-    return { getProductDetail, functions: { getServiceProductDetail, handleAddCart } }
+    return { getProductDetail, addToCart, functions: { getServiceProductDetail, handleAddCart } }
 }
