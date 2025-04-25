@@ -35,7 +35,6 @@ const HomePage = (props: HomePageTypes) => {
 
   const {
     dummyBanners,
-    dummyCategory,
     refreshing,
     product,
     form,

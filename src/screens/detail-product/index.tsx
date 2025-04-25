@@ -27,6 +27,8 @@ import BadgeVariant from '../../../components/badge-variant';
 import {useNavigateToScreen} from '../../helper/hooks';
 import {useDetailProductFunctions} from './useDetailProductFunctions';
 import {useEffect} from 'react';
+import {useAppSelector} from '../../store/hooks';
+import {shallowEqual} from 'react-redux';
 
 const DetailProduct = (props: any) => {
   const {navigation} = props;
@@ -38,15 +40,28 @@ const DetailProduct = (props: any) => {
   const {navigateToScreen} = useNavigateToScreen();
   const {
     getProductDetail,
-    functions: {getServiceProductDetail},
+    functions: {getServiceProductDetail, handleAddCart},
   } = useDetailProductFunctions();
-  
+
   const {loading, data, message} = getProductDetail;
+  const {loading: loadingCart, message: messageCart} = useAppSelector(
+    state => state.cart,
+    shallowEqual,
+  );
   useEffect(() => {
     if (typedParams?.id) {
       getServiceProductDetail(typedParams?.id);
     }
   }, [typedParams?.id]);
+
+  const onSubmit = () => {
+    let payload = {} as any;
+    payload.title = data?.title;
+    payload.description = data?.description;
+    payload.price = data?.price;
+    payload.id = data?.id;
+    handleAddCart(payload);
+  };
 
   return (
     <SafeAreaView style={styles.safearea}>
@@ -107,14 +122,14 @@ const DetailProduct = (props: any) => {
       <View style={styles.footer}>
         {/* section price */}
         <View style={{flex: 1}}>
-          <Text style={styles.strikeTroughPrice}>${data?.price + 2}</Text>
-          <Text style={styles.price}>${data?.price}</Text>
+          <Text style={styles.strikeTroughPrice}>${(data?.price || 0) + 2}</Text>
+          <Text style={styles.price}>${data?.price || 0}</Text>
         </View>
         <View style={{flex: 2}}>
           <ButtonSingle
             title="Add to Cart"
-            // isLoading={login.loading === 'pending'}
-            // onPress={onSubmit}
+            isLoading={loadingCart === 'pending'}
+            onPress={onSubmit}
           />
         </View>
       </View>
