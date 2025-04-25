@@ -44,6 +44,7 @@ const HomePage = (props: HomePageTypes) => {
     sort,
     category,
     filterByCategory,
+    cart,
     function: {
       onRefresh,
       handleGetAllProduct,
@@ -76,6 +77,7 @@ const HomePage = (props: HomePageTypes) => {
               rightIcon={<IconCart width={20} height={20} />}
               hasCount={true}
               rightPressIcon={() => navigateToScreen('cart')}
+              count={cart?.length || 0}
             />
             <Gap height={10} />
             <InputTextSearch

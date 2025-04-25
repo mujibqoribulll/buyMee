@@ -18,6 +18,7 @@ export type InitialProductType = {
   description?: string;
   title?: string;
   qty?:number;
+  checked?: boolean;
 };
 
 type Dimensions = {

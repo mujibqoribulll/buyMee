@@ -6,12 +6,16 @@ import {Poppins} from '../../src/utils/fonts';
 
 type CartTypes = {
   data: InitialProductType[];
-  handleDelete: (data: any) => void;
+  handleDelete: (data: InitialProductType) => void;
+  handleIncrease?: (data: InitialProductType) => void;
+  handleDecrease?: (data: InitialProductType) => void;
+  handleCheckBox?: (data: InitialProductType) => void;
 };
 
 const CartList = (props: CartTypes) => {
   const styles = useStyles();
-  const {data, handleDelete} = props;
+  const {data, handleDelete, handleIncrease, handleDecrease, handleCheckBox} =
+    props;
   return (
     <FlatList
       data={data}
@@ -22,6 +26,9 @@ const CartList = (props: CartTypes) => {
           data={item}
           key={index}
           handleDelete={data => handleDelete(data)}
+          handleIncrease={data => handleIncrease?.(data)}
+          handleDecrease={data => handleDecrease?.(data)}
+          handleCheckBox={data => handleCheckBox?.(data)}
         />
       )}
       contentContainerStyle={{marginBottom: 20}}

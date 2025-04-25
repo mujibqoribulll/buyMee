@@ -1,12 +1,11 @@
 import { shallowEqual } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { useEffect, useState } from "react";
-import { removeFromCartSuccess, removeFromCartStart, removeFromCartRejected, removeFromCartReset } from '../../slices/cartSlice';
+import { useEffect, useMemo, useState } from "react";
+import { removeFromCartSuccess, removeFromCartStart, removeFromCartRejected, removeFromCartReset, increaseCart, decreaseCart, toggleCartItemSelection } from '../../slices/cartSlice';
 import Toast from "react-native-toast-message";
 
 
 export const useCartFunctions = () => {
-    const [totalPrice, setTotalPrice] = useState(0)
     const [isDeletedProduct, setIsDeletedProduct] = useState(false)
     const [deletedProduct, setDeletedProduct] = useState({})
 
@@ -24,16 +23,38 @@ export const useCartFunctions = () => {
         }
     }, [removeFromCart?.message])
 
+    const handleIncrease = (data: any) => {
+        dispatch(increaseCart(data))
+    }
+
+    const handleDecrease = (data: any) => {
+        if (data?.qty > 1) {
+            dispatch(decreaseCart(data))
+        } else {
+            setIsDeletedProduct(true)
+            setDeletedProduct(data)
+        }
+    }
+
     useEffect(() => {
         return () => {
             dispatch(removeFromCartReset())
         }
     }, [])
 
-    const calculatePrice = () => {
-        let result = cart?.reduce((sum: any, item: any) => sum + item?.price * item?.qty, 0)
-        setTotalPrice(result)
+    const handleCheckBox = (data: any) => {
+        dispatch(toggleCartItemSelection(data))
+
     }
+
+    const totalPrice = useMemo(() => {
+        return cart?.reduce((sum: any, item: any) => {
+            if (item?.checked) {
+                return sum + item?.price * item?.qty
+            }
+            return sum;
+        }, 0)
+    }, [cart])
 
     const handleDelete = (data: any) => {
 
@@ -63,9 +84,6 @@ export const useCartFunctions = () => {
         setDeletedProduct({})
     }
 
-    useEffect(() => {
-        calculatePrice()
-    }, [cart])
 
     return {
         cart,
@@ -75,6 +93,9 @@ export const useCartFunctions = () => {
             handleDelete,
             handleCloseDeleteModal,
             onPressDelete,
+            handleIncrease,
+            handleDecrease,
+            handleCheckBox,
         }
     }
 }

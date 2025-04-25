@@ -19,6 +19,7 @@ interface ProductParams {
 export const useHomeFunctions = () => {
     const dispatch = useAppDispatch();
     const { product, category } = useAppSelector(state => state.home, shallowEqual);
+    const { cart } = useAppSelector(state => state.cart, shallowEqual)
     const [modalSort, setModalSort] = useState(false);
     const [sort, setSort] = useState({
         price: '',
@@ -137,7 +138,7 @@ export const useHomeFunctions = () => {
 
 
     return {
-        dummyBanners, refreshing, product, form, modalSort, IsDisableFilter, OBJECT_SORTBY, sort, category, filterByCategory, function: {
+        dummyBanners, refreshing, product, form, modalSort, IsDisableFilter, OBJECT_SORTBY, sort, category, filterByCategory, cart, function: {
             onClickProduct,
             handleGetAllProduct,
             setRefreshing,

@@ -7,7 +7,7 @@ import {
   IconDeleteGray,
   IconMinus,
   IconPlus,
-  ImageFour,
+  IconCheckbox,
 } from '../../src/assets';
 import {Poppins} from '../../src/utils/fonts';
 import ButtonIcon from '../button-icon';
@@ -16,22 +16,45 @@ import Gap from '../gap';
 type CartTypes = {
   data: InitialProductType;
   handleDelete?: (data: any) => void;
+  handleIncrease?: (data: any) => void;
+  handleDecrease?: (data: any) => void;
+  handleCheckBox?: (data: any) => void;
 };
 
 const CartProduct = (props: CartTypes): JSX.Element => {
-  const {data, handleDelete} = props;
+  const {data, handleDelete, handleIncrease, handleDecrease, handleCheckBox} =
+    props;
   const styles = useStyles();
 
   const handleDeleteCart = () => {
     handleDelete?.(data);
+  };
+
+  const onPressIncrease = () => {
+    handleIncrease?.(data);
+  };
+
+  const onPressDecrease = () => {
+    handleDecrease?.(data);
+  };
+
+  const onPressCheckbox = () => {
+    handleCheckBox?.(data);
   };
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <View style={styles.sectionCheckBox}>
           <ButtonIcon
-            icon={<IconCheckBox width={20} height={20} />}
+            icon={
+              data?.checked ? (
+                <IconCheckBox width={20} height={20} />
+              ) : (
+                <IconCheckbox width={20} height={20} />
+              )
+            }
             styleIcon={styles.styleIcon}
+            onPress={onPressCheckbox}
           />
         </View>
         <Gap width={10} />
@@ -71,6 +94,7 @@ const CartProduct = (props: CartTypes): JSX.Element => {
               <ButtonIcon
                 icon={<IconMinus width={15} height={15} />}
                 styleIcon={styles.styleFooterAction}
+                onPress={onPressDecrease}
               />
               <Gap width={20} />
               <Text style={styles.price}>{data?.qty || 1}</Text>
@@ -78,6 +102,7 @@ const CartProduct = (props: CartTypes): JSX.Element => {
               <ButtonIcon
                 icon={<IconPlus width={15} height={15} />}
                 styleIcon={styles.styleFooterAction}
+                onPress={onPressIncrease}
               />
             </View>
           </View>

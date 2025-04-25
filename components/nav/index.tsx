@@ -15,6 +15,7 @@ type NavType = {
   doubleButtonRight?: boolean;
   rightIconMore?: React.ReactNode;
   hasCount?:boolean;
+  count?: number
 };
 
 const Nav = (props: NavType) => {
@@ -29,6 +30,7 @@ const Nav = (props: NavType) => {
     doubleButtonRight = false,
     rightIconMore,
     hasCount = false,
+    count,
   } = props;
   const styles = useStyles();
 
@@ -48,7 +50,7 @@ const Nav = (props: NavType) => {
           <ButtonIcon icon={rightIcon} onPress={rightPressIcon} />
         </View>
       ) : (
-        <ButtonIcon icon={rightIcon} onPress={rightPressIcon} hasCount={hasCount} />
+        <ButtonIcon icon={rightIcon} onPress={rightPressIcon} hasCount={hasCount} count={count}  />
       )}
     </View>
   );

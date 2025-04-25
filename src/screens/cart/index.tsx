@@ -19,7 +19,14 @@ const Cart = () => {
     cart,
     totalPrice,
     isDeletedProduct,
-    function: {handleDelete, handleCloseDeleteModal, onPressDelete},
+    function: {
+      handleDelete,
+      handleCloseDeleteModal,
+      onPressDelete,
+      handleIncrease,
+      handleDecrease,
+      handleCheckBox,
+    },
   } = useCartFunctions();
 
   return (
@@ -32,14 +39,20 @@ const Cart = () => {
       />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Gap height={10} />
-        <CartList data={cart} handleDelete={data => handleDelete(data)} />
+        <CartList
+          data={cart}
+          handleDelete={data => handleDelete(data)}
+          handleIncrease={data => handleIncrease(data)}
+          handleDecrease={data => handleDecrease(data)}
+          handleCheckBox={handleCheckBox}
+        />
       </ScrollView>
 
       {/* section price */}
       {cart?.length > 0 && (
         <View style={styles.footer}>
           <ButtonSingle
-            title={`$ ${totalPrice}`}
+            title={`$ ${totalPrice} Checkout` }
             // isLoading={login.loading === 'pending'}
             // onPress={onSubmit}
           />

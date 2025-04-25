@@ -14,11 +14,12 @@ type ButtonIcon = {
   onPress?: (event: GestureResponderEvent) => void;
   hasCount?: boolean;
   styleIcon?: StyleProp<ViewStyle>;
+  count?: number
 };
 
 const ButtonIcon = (props: ButtonIcon): JSX.Element => {
   const styles = useStyles();
-  const {icon, onPress, hasCount = false, styleIcon} = props;
+  const {icon, onPress, hasCount = false, styleIcon, count} = props;
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View>
@@ -27,7 +28,7 @@ const ButtonIcon = (props: ButtonIcon): JSX.Element => {
         </View>
         {hasCount && (
           <View style={styles.badge}>
-            <Text style={styles.badgeText}>8</Text>
+            <Text style={styles.badgeText}>{count}</Text>
           </View>
         )}
       </View>

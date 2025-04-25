@@ -50,8 +50,8 @@ export const cartSlice = createSlice({
                 payload.price = action.payload?.price
                 payload.qty = 1
                 payload.image = action.payload?.image
+                payload.checked = false
                 let findIndex = newDataCart?.findIndex(item => item?.id === action.payload?.id)
-                console.log(findIndex)
                 if (findIndex === -1) { //add it if it doesn't exist yet
                     state.cart = [payload, ...newDataCart]
                     state.addToCart.message = 'Successfully added to your cart.'
@@ -68,6 +68,42 @@ export const cartSlice = createSlice({
                     state.addToCart.loading = 'succeeded'
                 }
             }
+        },
+        decreaseCart: (state, action) => {
+            let newDataCart = [...state.cart]
+            let result = newDataCart?.map(item => {
+                if (item?.id === action.payload?.id && item?.qty > 1) {
+                    return { ...item, qty: item?.qty - 1 }
+                }
+                return item
+            })
+
+            state.cart = result
+
+        },
+        increaseCart: (state, action) => {
+            let newDataCart = [...state.cart]
+            let result = newDataCart?.map(item => {
+                if (item?.id === action.payload?.id && item?.qty) {
+                    return { ...item, qty: item?.qty + 1 }
+
+                }
+                return item
+            })
+
+            state.cart = result
+
+        },
+        toggleCartItemSelection: (state, action) => {
+            let newDataCart = [...state.cart]
+            let result = newDataCart?.map(item => {
+                if (item?.id === action.payload?.id) {
+                    return { ...item, checked: !action.payload?.checked }
+                }
+                return item
+            })
+
+            state.cart = result
         },
         addToCartRejected: (state) => {
             state.addToCart.loading = 'failed'
@@ -97,7 +133,7 @@ export const cartSlice = createSlice({
     }
 })
 
-export const { addToCartSuccess, addToCartRejected, addToCartStart, removeFromCartSuccess, removeFromCartStart, removeFromCartRejected, addToCartReset, removeFromCartReset } = cartSlice.actions
+export const { addToCartSuccess, addToCartRejected, addToCartStart, removeFromCartSuccess, removeFromCartStart, removeFromCartRejected, addToCartReset, removeFromCartReset, decreaseCart, increaseCart, toggleCartItemSelection } = cartSlice.actions
 
 
 export default cartSlice.reducer
