@@ -18,7 +18,7 @@ import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 const persistConfig: any = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['auth'],
+    whitelist: ['auth', 'cart'],
     stateReconciler: autoMergeLevel2,
 };
 

@@ -16,7 +16,6 @@ interface AddCartType {
 export const useDetailProductFunctions = () => {
     const { getProductDetail, getServiceProductDetail, reset } = useGetProductDetail();
     const { addToCart } = useAppSelector(state => state.cart, shallowEqual)
-    console.log('addToCart', addToCart.message)
     const { navigateToScreen } = useNavigateToScreen()
     const dispatch = useAppDispatch()
 
